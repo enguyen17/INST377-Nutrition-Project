@@ -3,7 +3,7 @@
 }
 .navBar {
     text-align: center;
-    width: 100%;
+    width: 99.7%;
     background-color: rgb(249, 169, 209);
     border-radius: 5px;
     padding: 1px;
@@ -21,4 +21,10 @@ a {
 }
 a:hover {
     color:white;
+}
+.HomePageParagraph {
+    text-align: center;
+    margin-left: 10%;
+    width: 80%;
+    
 }
