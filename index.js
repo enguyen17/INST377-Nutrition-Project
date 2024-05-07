@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 app.get('/recipes', async (req, res) => {
     console.log('Attempting to GET recipe analysis')
     const { data, error } = await supabase
-        .from('INST377_NutritionApp')
+        .from('NutritionApp')
         .select()
 
     if (error) {
@@ -39,10 +39,13 @@ app.post('/recipe', async (req, res) => {
     var recipeName = req.body.recipeName;
     var dishType = req.body.dishType;
     var recipeCalories = req.body.recipeCalories;
+    var cuisineType = req.body.cuisineType;
+    var numServing = req.body.numServing;
+
 
     const { data, error } = await supabase
-        .from('INST377_NutritionApp')
-        .insert({ recipe_name: recipeName, dish_type: dishType, recipe_calories: recipeCalories })
+        .from('NutritionApp')
+        .insert({ recipe_name: recipeName, dish_type: dishType, recipe_calories: recipeCalories, cuisine_type: cuisineType, num_servings: numServing })
         .select()
 
     if (error) {
