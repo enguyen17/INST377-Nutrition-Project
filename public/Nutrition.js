@@ -26,8 +26,11 @@ async function createRecipeLog() {
 
     // calls and stores the edamam api response from the loadRecipeAnalysis function
     recipeAnalysis = await loadRecipeAnalysis();
-
     console.log(recipeAnalysis);
+
+    nutrientInfo = recipeAnalysis.totalNutrients;
+
+    //console.log(nutrientInfo.FAT['quantity']);
 
     // uses the post function to input the desired information into the database
     await fetch(`${host}/recipe`, {
