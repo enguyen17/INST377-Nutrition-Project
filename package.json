@@ -4,12 +4,13 @@
   "description": "INST377 Nutrition App Group Project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon -e '*'"
   },
   "author": "Gabe Cadet, Alvin Kolani, Emily Nguyen, Rodrigo Villamil",
   "license": "ISC",
   "dependencies": {
     "@supabase/supabase-js": "^2.43.1",
+    "body-parser": "^1.20.2",
     "express": "^4.19.2",
     "nodemon": "^3.1.0"
   }

@@ -20,6 +20,25 @@
         </nav>
     </div>
 
+    <!-- user can input recipe information here, submission will call api and add info to database -->
+    <form onsubmit="createRecipeLog(); return false;">
+        <div>
+            <label for="recipeName">Recipe Name: </label>
+            <br>
+            <input name="recipeName" id="recipeName">
+        </div>
+        <br>
+        <div>
+            <label for="ingr">Input Ingredients (Add each ingredient on a new line): </label>
+            <br>
+            <textarea id="ingr" name="ingr" rows="8"></textarea>
+        </div>
+        <br>
+        <div>
+            <button>Calculate recipe</button>
+        </div>
+    </form>
+
 
 </body>
 
