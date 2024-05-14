@@ -1,5 +1,4 @@
 var host = window.location.origin;
-console.log(host)
 
 // takes user input and inputs info into edamam api, generates response
 function loadRecipeAnalysis() {
@@ -30,7 +29,7 @@ async function createRecipeLog() {
 
     nutrientInfo = recipeAnalysis.totalNutrients;
 
-    //console.log(nutrientInfo.FAT['quantity']);
+    console.log(Math.round(nutrientInfo.FAT['quantity']));
 
     // uses the post function to input the desired information into the database
     await fetch(`${host}/recipe`, {
@@ -40,7 +39,24 @@ async function createRecipeLog() {
             "dishType": recipeAnalysis.dishType[0], 
             "recipeCalories": recipeAnalysis.calories,
             "cuisineType": recipeAnalysis.cuisineType[0],
-            "numServing": recipeAnalysis.yield
+            "numServing": recipeAnalysis.yield,
+            "totalFat": Math.round(nutrientInfo.FAT['quantity']),
+            "satFat": Math.round(nutrientInfo.FASAT['quantity']),
+            "transFat": Math.round(nutrientInfo.FATRN['quantity']),
+            "polyunsatFat": Math.round(nutrientInfo.FAPU['quantity']),
+            "monounsatFat": Math.round(nutrientInfo.FAMS['quantity']),
+            "cholest": Math.round(nutrientInfo.CHOLE['quantity']),
+            "sodi": Math.round(nutrientInfo.NA['quantity']),
+            "totalCarb": Math.round(nutrientInfo.CHOCDF['quantity']),
+            "fib": Math.round(nutrientInfo.FIBTG['quantity']),
+            "suga": Math.round(nutrientInfo.SUGAR['quantity']),
+            "prot": Math.round(nutrientInfo.PROCNT['quantity']),
+            "vitA": Math.round(nutrientInfo.VITA_RAE['quantity']),
+            "vitC": Math.round(nutrientInfo.VITC['quantity']),
+            "calci": Math.round(nutrientInfo.CA['quantity']),
+            "iro": Math.round(nutrientInfo.FE['quantity']),
+            "potass": Math.round(nutrientInfo.K['quantity']),
+            "vitD": Math.round(nutrientInfo.VITD['quantity'])
         }),
         headers: {
             "Content-type": "application/json"
@@ -50,5 +66,8 @@ async function createRecipeLog() {
     .then((res) => {
         
     })
+
+    document.forms['add-recipe'].reset()
+
 
 }
