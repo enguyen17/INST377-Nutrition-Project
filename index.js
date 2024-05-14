@@ -41,11 +41,50 @@ app.post('/recipe', async (req, res) => {
     var recipeCalories = req.body.recipeCalories;
     var cuisineType = req.body.cuisineType;
     var numServing = req.body.numServing;
-
+    var totalFat = req.body.totalFat;
+    var satFat = req.body.satFat;
+    var transFat = req.body.transFat;
+    var polyunsatFat = req.body.polyunsatFat;
+    var monounsatFat = req.body.monounsatFat;
+    var cholest = req.body.cholest;
+    var sodi = req.body.sodi;
+    var totalCarb = req.body.totalCarb;
+    var fib = req.body.fib;
+    var suga = req.body.suga;
+    var prot = req.body.prot;
+    var vitA = req.body.vitA;
+    var vitC = req.body.vitC;
+    var calci = req.body.calci;
+    var iro = req.body.iro;
+    var potass = req.body.potass;
+    var vitD = req.body.vitD;
 
     const { data, error } = await supabase
         .from('NutritionApp')
-        .insert({ recipe_name: recipeName, dish_type: dishType, recipe_calories: recipeCalories, cuisine_type: cuisineType, num_servings: numServing })
+        .insert({ 
+            recipe_name: recipeName, 
+            dish_type: dishType, 
+            recipe_calories: recipeCalories, 
+            cuisine_type: cuisineType, 
+            num_servings: numServing,
+            total_fat: totalFat,
+            saturated_fat: satFat,
+            trans_fat: transFat,
+            polyunsat_fat: polyunsatFat,
+            monounsat_fat: monounsatFat,
+            cholesterol: cholest,
+            sodium: sodi,
+            total_carb: totalCarb,
+            fiber: fib,
+            sugar: suga,
+            protein: prot,
+            vit_a: vitA,
+            vit_c: vitC,
+            calcium: calci,
+            iron: iro,
+            potassium: potass,
+            vit_d: vitD
+        })
         .select()
 
     if (error) {
