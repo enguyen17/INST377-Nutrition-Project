@@ -1,5 +1,55 @@
 var host = window.location.origin;
 
+// store dishType counts
+let dishTypeCounts = {};
+let chart;
+
+// creates or updates chart
+function dishTypeChart(dishTypes) {
+    //update count for dishType
+    dishTypes.forEach(type => {
+        dishTypeCounts[type] = (dishTypeCounts[type] || 0) + 1;
+    });
+
+    if (chart) {
+        //if chart exists update the data.
+        chart.data.labels = Object.keys(dishTypeCounts);
+        chart.data.datasets[0].data = Object.values(dishTypeCounts);
+        chart.update();
+    } else {
+        //if chart doesnt exist create one.
+        const ctx = document.getElementById('dishTypeChart');
+        chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(dishTypeCounts),
+                datasets: [{
+                    label: 'Number of Recipes',
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1,
+                    data: Object.values(dishTypeCounts),
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        ticks: {
+                            color: 'black',
+                            stepSize: 1
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: 'black'
+                        }
+                    },
+                }
+            }
+        });
+    }
+}
+
 // takes user input and inputs info into edamam api, generates response
 function loadRecipeAnalysis() {
     let ingredients = document.getElementById('ingr').value;
@@ -30,6 +80,9 @@ async function createRecipeLog() {
     nutrientInfo = recipeAnalysis.totalNutrients;
 
     console.log(Math.round(nutrientInfo.FAT['quantity']));
+
+    const dishTypes = recipeAnalysis.dishType;
+    dishTypeChart(dishTypes);
 
     // uses the post function to input the desired information into the database
     await fetch(`${host}/recipe`, {
