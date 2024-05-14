@@ -88,8 +88,8 @@ async function createRecipeLog() {
     await fetch(`${host}/recipe`, {
         method: 'POST',
         body: JSON.stringify({
-            "recipeName": `${document.getElementById('recipeName').value}`, 
-            "dishType": recipeAnalysis.dishType[0], 
+            "recipeName": `${document.getElementById('recipeName').value}`,
+            "dishType": recipeAnalysis.dishType[0],
             "recipeCalories": recipeAnalysis.calories,
             "cuisineType": recipeAnalysis.cuisineType[0],
             "numServing": recipeAnalysis.yield,
@@ -115,12 +115,16 @@ async function createRecipeLog() {
             "Content-type": "application/json"
         }
     })
-    .then((res) => res.json())
-    .then((res) => {
-        
-    })
+        .then((res) => res.json())
+        .then((res) => {
+
+        })
 
     document.forms['add-recipe'].reset()
+}
 
+// get the supabase database recipe information
 
+function getRecipes() {
+    return fetch(`${host}/recipes`).then((res) => res.json())
 }
