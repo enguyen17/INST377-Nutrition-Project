@@ -36,8 +36,8 @@ async function createRecipeLog() {
     await fetch(`${host}/recipe`, {
         method: 'POST',
         body: JSON.stringify({
-            "recipeName": `${document.getElementById('recipeName').value}`, 
-            "dishType": recipeAnalysis.dishType[0], 
+            "recipeName": `${document.getElementById('recipeName').value}`,
+            "dishType": recipeAnalysis.dishType[0],
             "recipeCalories": recipeAnalysis.calories,
             "cuisineType": recipeAnalysis.cuisineType[0],
             "numServing": recipeAnalysis.yield
@@ -46,9 +46,61 @@ async function createRecipeLog() {
             "Content-type": "application/json"
         }
     })
-    .then((res) => res.json())
-    .then((res) => {
+        .then((res) => res.json())
+        .then((res) => {
+            console.log('clickwrk')
+            var vm = new Vue({
+                el: '.app',
+                components: {
+                    'nutrition-label': window.VueNutritionLabel.NutritionLabel
+                },
+                data() {
+                    return {
+                        options: {
+                            width: 280,
+                            useFdaRounding: 1,
+                            readOnly: false,
+                            multipleItems: false
+                        },
+                        item: {
+                            name: 'Super Cheese Burger',
+                            serving: 1,
+                            servingPerContainer: 0,
+                            servingUnitName: 'serving',
+                            ingredientStatement: 'Swiss cheese, American cheese, more cheese and a burger.',
+                            nutrition: {
+                                calories: 510,
+                                fatCalories: 170,
+                                totalFat: 19,
+                                saturatedFat: 9,
+                                transFat: 0,
+                                polyunsaturatedFat: 0,
+                                monounsaturatedFat: 0,
+                                cholesterol: 10,
+                                sodium: 560,
+                                totalCarb: 79,
+                                fiber: 4,
+                                sugars: 35,
+                                protein: 9,
+                                vitaminA: 1,
+                                vitaminC: 2,
+                                calcium: 35,
+                                iron: 1,
+                                addedSugars: 0,
+                                potassium: 100,
+                                vitaminD: 0,
+                                servingWeight: 175
+                            }
+                        }
+                    };
+                }
+            }); 
+            
+        })
         
-    })
+    
+
 
 }
+
+

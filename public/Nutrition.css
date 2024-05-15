@@ -1,6 +1,7 @@
-.pageHeader  {
+.pageHeader {
     text-align: center;
 }
+
 .navBar {
     text-align: center;
     width: 99.7%;
@@ -9,19 +10,23 @@
     padding: 1px;
     margin: 2px;
 }
+
 #navItems {
     display: inline;
     margin: 10px;
     padding: 5px;
     list-style-type: none;
 }
+
 a {
     color: black;
     text-decoration: none;
 }
+
 a:hover {
-    color:white;
+    color: white;
 }
+
 .HomePageParagraph {
     text-align: center;
     margin-left: 10%;
@@ -30,3 +35,10 @@ a:hover {
     padding: 5px;
 }
 
+.nutritionLabel {
+    display: inline-block;
+    width: 30%;
+    height: 15%;
+    color:red;
+
+}
