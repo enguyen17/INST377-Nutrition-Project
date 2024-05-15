@@ -45,14 +45,16 @@
         <br>
     </form>
 
+    <!-- Recipe Label Container  -->
+    <div id="app" style="display:inline-block; margin-left: 8%;">
+        <nutrition-label :options="options" v-model="item"></nutrition-label>
+    </div>
+
     <div>
         <canvas id="dishTypeChart" width="600" height="200"></canvas>
     </div>
     
-    <!-- Recipe container  -->
-    <div id="app">
-        <nutrition-label :options="options" v-model="item"></nutrition-label>
-    </div>
+    
 
 
 </body>
