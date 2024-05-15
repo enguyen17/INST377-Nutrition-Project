@@ -116,7 +116,7 @@ async function createRecipeLog() {
     })
         .then((res) => res.json())
         .then((res) => {
-            getLabel(document.getElementById('recipeName').value)
+            
 
         })
     document.forms['add-recipe'].reset()
