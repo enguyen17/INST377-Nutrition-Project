@@ -26,6 +26,7 @@ async function createRecipeLog() {
 
     // calls and stores the edamam api response from the loadRecipeAnalysis function
     recipeAnalysis = await loadRecipeAnalysis();
+    getLabel(recipeAnalysis)
     console.log(recipeAnalysis);
 
     nutrientInfo = recipeAnalysis.totalNutrients;
@@ -37,9 +38,9 @@ async function createRecipeLog() {
         method: 'POST',
         body: JSON.stringify({
             "recipeName": `${document.getElementById('recipeName').value}`,
-            "dishType": recipeAnalysis.dishType[0],
+            "dishType": recipeAnalysis.dishType,
             "recipeCalories": recipeAnalysis.calories,
-            "cuisineType": recipeAnalysis.cuisineType[0],
+            "cuisineType": recipeAnalysis.cuisineType,
             "numServing": recipeAnalysis.yield
         }),
         headers: {
@@ -48,59 +49,86 @@ async function createRecipeLog() {
     })
         .then((res) => res.json())
         .then((res) => {
-            console.log('clickwrk')
-            var vm = new Vue({
-                el: '.app',
-                components: {
-                    'nutrition-label': window.VueNutritionLabel.NutritionLabel
-                },
-                data() {
-                    return {
-                        options: {
-                            width: 280,
-                            useFdaRounding: 1,
-                            readOnly: false,
-                            multipleItems: false
-                        },
-                        item: {
-                            name: 'Super Cheese Burger',
-                            serving: 1,
-                            servingPerContainer: 0,
-                            servingUnitName: 'serving',
-                            ingredientStatement: 'Swiss cheese, American cheese, more cheese and a burger.',
-                            nutrition: {
-                                calories: 510,
-                                fatCalories: 170,
-                                totalFat: 19,
-                                saturatedFat: 9,
-                                transFat: 0,
-                                polyunsaturatedFat: 0,
-                                monounsaturatedFat: 0,
-                                cholesterol: 10,
-                                sodium: 560,
-                                totalCarb: 79,
-                                fiber: 4,
-                                sugars: 35,
-                                protein: 9,
-                                vitaminA: 1,
-                                vitaminC: 2,
-                                calcium: 35,
-                                iron: 1,
-                                addedSugars: 0,
-                                potassium: 100,
-                                vitaminD: 0,
-                                servingWeight: 175
-                            }
-                        }
-                    };
-                }
-            }); 
-            
+            getLabel(document.getElementById('recipeName').value)
+
         })
-        
-    
+}
+async function getLabel(analysis) {
+    const calories = analysis.calories;
+    const yeild = analysis.yeild;
+    const saturatedFat = analysis.totalNutrients.FASAT.quantity;
+    const transFat = analysis.totalNutrients.FATRN.quantity;
+    const polyunsaturatedFat = analysis.totalNutrients.FAPU.quantity;
+    const monounsaturatedFat = analysis.totalNutrients.FAMS.quantity;
+    const totalFat = (saturatedFat + transFat + polyunsaturatedFat + monounsaturatedFat);
+    const cholesterol = analysis.totalNutrients.CHOLE.quantity;
+    const sodium = analysis.totalNutrients.NA.quantity;
+    const totalCarb = analysis.totalNutrients.CHOCDF.quantity;
+    const fiber = analysis.totalNutrients.FIBTG.quantity;
+    const sugars = analysis.totalNutrients.SUGAR.quantity;
+    const protein = analysis.totalNutrients.PROCNT.quantity;
+    const vitaminA = analysis.totalNutrients.VITA_RAE.quantity;
+    const vitaminC = analysis.totalNutrients.VITC.quantity;
+    const calcium = analysis.totalNutrients.CA.quantity;
+    const iron = analysis.totalNutrients.FE.quantity;
+    const addedSugars = analysis.totalNutrients.SUGAR.quantity;
+    const potassium = analysis.totalNutrients.K.quantity;
+    const vitaminD = analysis.totalNutrients.VITD.quantity;
+    const servingWeight = analysis.totalWeight;
+    const fatCalories = totalFat*9;
 
 
+    try {
+        var vm = new Vue({
+            el: '#app',
+            components: {
+                'nutrition-label': window.VueNutritionLabel.NutritionLabel
+            },
+            data() {
+                return {
+                    options: {
+                        width: 280,
+                        useFdaRounding: 1,
+                        readOnly: false,
+                        multipleItems: false
+                    },
+                    item: {
+                        name: analysis.recipe_name,
+                        serving: analysis.num_servings,
+                        servingPerContainer: yeild,
+                        servingUnitName: 'serving',
+                        ingredientStatement: '',
+                        nutrition: {
+                            calories: calories,
+                            fatCalories: fatCalories,
+                            totalFat: totalFat,
+                            saturatedFat: saturatedFat,
+                            transFat: transFat,
+                            polyunsaturatedFat: polyunsaturatedFat,
+                            monounsaturatedFat: monounsaturatedFat,
+                            cholesterol: cholesterol,
+                            sodium: sodium,
+                            totalCarb: totalCarb,
+                            fiber: fiber,
+                            sugars: sugars,
+                            protein: protein,
+                            vitaminA: vitaminA,
+                            vitaminC: vitaminC,
+                            calcium: calcium,
+                            iron: iron,
+                            addedSugars: addedSugars,
+                            potassium: potassium,
+                            vitaminD: vitaminD,
+                            servingWeight: servingWeight
+                        }
+                    }
+                };
+            }
+        });
+
+    } catch (error) {
+        console.error("getLabel", error);
+    }
 }
 
 
