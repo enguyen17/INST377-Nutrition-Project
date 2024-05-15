@@ -75,7 +75,7 @@ async function createRecipeLog() {
 
     // calls and stores the edamam api response from the loadRecipeAnalysis function
     recipeAnalysis = await loadRecipeAnalysis();
-    getLabel(recipeAnalysis)
+   
     console.log(recipeAnalysis);
 
     nutrientInfo = recipeAnalysis.totalNutrients;
@@ -116,35 +116,37 @@ async function createRecipeLog() {
     })
         .then((res) => res.json())
         .then((res) => {
-            
-
+            getLabel(res[0]);
         })
     document.forms['add-recipe'].reset()
 
 }
+
 async function getLabel(analysis) {
-    const calories = analysis.calories;
-    const yeild = analysis.yeild;
-    const saturatedFat = analysis.totalNutrients.FASAT.quantity;
-    const transFat = analysis.totalNutrients.FATRN.quantity;
-    const polyunsaturatedFat = analysis.totalNutrients.FAPU.quantity;
-    const monounsaturatedFat = analysis.totalNutrients.FAMS.quantity;
-    const totalFat = (saturatedFat + transFat + polyunsaturatedFat + monounsaturatedFat);
-    const cholesterol = analysis.totalNutrients.CHOLE.quantity;
-    const sodium = analysis.totalNutrients.NA.quantity;
-    const totalCarb = analysis.totalNutrients.CHOCDF.quantity;
-    const fiber = analysis.totalNutrients.FIBTG.quantity;
-    const sugars = analysis.totalNutrients.SUGAR.quantity;
-    const protein = analysis.totalNutrients.PROCNT.quantity;
-    const vitaminA = analysis.totalNutrients.VITA_RAE.quantity;
-    const vitaminC = analysis.totalNutrients.VITC.quantity;
-    const calcium = analysis.totalNutrients.CA.quantity;
-    const iron = analysis.totalNutrients.FE.quantity;
-    const addedSugars = analysis.totalNutrients.SUGAR.quantity;
-    const potassium = analysis.totalNutrients.K.quantity;
-    const vitaminD = analysis.totalNutrients.VITD.quantity;
-    const servingWeight = analysis.totalWeight;
+    let recipeName = analysis.recipe_name;
+    const calories = analysis.recipe_calories;
+    const yield = analysis.num_servings;
+    const saturatedFat = analysis.saturated_fat;
+    const transFat = analysis.trans_fat;
+    const polyunsaturatedFat = analysis.polyunsat_fat;
+    const monounsaturatedFat = analysis.monounsat_fat;
+    const totalFat = analysis.total_fat;
+    const cholesterol = analysis.cholesterol;
+    const sodium = analysis.sodium;
+    const totalCarb = analysis.total_carb;
+    const fiber = analysis.fiber;
+    const sugars = analysis.sugar;
+    const protein = analysis.protein;
+    const vitaminA = analysis.vit_a;
+    const vitaminC = analysis.vit_c;
+    const calcium = analysis.calcium;
+    const iron = analysis.iron;
+    const potassium = analysis.potassium;
+    const vitaminD = analysis.vit_d;
     const fatCalories = totalFat * 9;
+
+    let ingredients = document.getElementById('ingr').value;
+
 
 
     try {
@@ -162,11 +164,11 @@ async function getLabel(analysis) {
                         multipleItems: false
                     },
                     item: {
-                        name: analysis.recipe_name,
-                        serving: analysis.num_servings,
-                        servingPerContainer: yeild,
+                        name: recipeName,
+                        serving: yield,
+                        servingPerContainer: yield,
                         servingUnitName: 'serving',
-                        ingredientStatement: '',
+                        ingredientStatement: ingredients,
                         nutrition: {
                             calories: calories,
                             fatCalories: fatCalories,
@@ -185,10 +187,8 @@ async function getLabel(analysis) {
                             vitaminC: vitaminC,
                             calcium: calcium,
                             iron: iron,
-                            addedSugars: addedSugars,
                             potassium: potassium,
                             vitaminD: vitaminD,
-                            servingWeight: servingWeight
                         }
                     }
                 };
