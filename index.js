@@ -91,7 +91,7 @@ app.post('/recipe', async (req, res) => {
         console.log("Error")
         res.send(error)
     } else {
-        res.send(data)
+        res.send(data) 
     }
 })
 
