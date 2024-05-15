@@ -5,6 +5,10 @@
     <script src="nutrition.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="nutrition.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-nutrition-label/dist/vue-nutrition-label.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/vue-nutrition-label/dist/vue-nutrition-label.min.css" rel="stylesheet"
+        type="text/css">
 </head>
 
 <body>
@@ -45,6 +49,11 @@
         <canvas id="dishTypeChart" width="600" height="200"></canvas>
     </div>
     
+    <!-- Recipe container  -->
+    <div id="app">
+        <nutrition-label :options="options" v-model="item"></nutrition-label>
+    </div>
+
 
 </body>
 
