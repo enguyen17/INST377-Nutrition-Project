@@ -79,8 +79,6 @@ async function createRecipeLog() {
 
     nutrientInfo = recipeAnalysis.totalNutrients;
 
-    console.log(Math.round(nutrientInfo.FAT['quantity']));
-
     const dishTypes = recipeAnalysis.dishType;
     dishTypeChart(dishTypes);
 
@@ -126,5 +124,5 @@ async function createRecipeLog() {
 // get the supabase database recipe information
 
 function getRecipes() {
-    return fetch(`${host}/recipes`).then((res) => res.json())
+   return fetch(`${host}/recipes`).then((res) => res.json())
 }
