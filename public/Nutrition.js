@@ -124,7 +124,7 @@ async function createRecipeLog() {
 }
 async function getLabel(analysis) {
     const calories = analysis.calories;
-    const yeild = analysis.yeild;
+    const yield = analysis.yield;
     const saturatedFat = analysis.totalNutrients.FASAT.quantity;
     const transFat = analysis.totalNutrients.FATRN.quantity;
     const polyunsaturatedFat = analysis.totalNutrients.FAPU.quantity;
@@ -164,7 +164,7 @@ async function getLabel(analysis) {
                     item: {
                         name: analysis.recipe_name,
                         serving: analysis.num_servings,
-                        servingPerContainer: yeild,
+                        servingPerContainer: yield,
                         servingUnitName: 'serving',
                         ingredientStatement: '',
                         nutrition: {
