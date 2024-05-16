@@ -114,3 +114,11 @@ body{
     margin-right: 100px;
     margin-top: 20px;
 }
+
+#foodPic img{
+    width: 50%;
+    height: 50%;
+    position: fixed;
+    right: 70px;
+    top: 200px;
+}
