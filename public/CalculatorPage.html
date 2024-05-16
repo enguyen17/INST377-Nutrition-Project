@@ -50,11 +50,14 @@
         <nutrition-label :options="options" v-model="item"></nutrition-label>
     </div>
 
-    <div>
+    <!--Chart button-->
+    <div style = "margin-top: 10px;">
+        <button id="viewChartButton" class="button-33">View Dish Type Chart</button>
+    </div>
+    <!--Chart itself-->
+    <div id="chartContainer" style="display: none;">
         <canvas id="dishTypeChart" width="600" height="200"></canvas>
     </div>
-    
-    
 
 
 </body>
