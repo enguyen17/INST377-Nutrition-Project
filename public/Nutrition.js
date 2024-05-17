@@ -5,19 +5,23 @@ let dishTypeCounts = {};
 let chart;
 
 // creates or updates chart
-function dishTypeChart(dishTypes) {
-    //update count for dishType
-    dishTypes.forEach(type => {
-        dishTypeCounts[type] = (dishTypeCounts[type] || 0) + 1;
+function dishTypeChart(recipes) {
+    //reset dishTypeCounts
+    dishTypeCounts = {};
+
+    //iterate through the recipe arrary
+    recipes.forEach(recipe => {
+        const dishType = recipe.dish_type;
+        dishTypeCounts[dishType] = (dishTypeCounts[dishType] || 0) + 1;
     });
 
     if (chart) {
-        //if chart exists update the data.
+        //if chart exists, update chart
         chart.data.labels = Object.keys(dishTypeCounts);
         chart.data.datasets[0].data = Object.values(dishTypeCounts);
         chart.update();
     } else {
-        //if chart doesnt exist create one.
+        //if chart doesn't exist, create one
         const ctx = document.getElementById('dishTypeChart');
         chart = new Chart(ctx, {
             type: 'bar',
@@ -80,8 +84,6 @@ async function createRecipeLog() {
 
     nutrientInfo = recipeAnalysis.totalNutrients;
 
-    const dishTypes = recipeAnalysis.dishType;
-    dishTypeChart(dishTypes);
 
     // uses the post function to input the desired information into the database
     await fetch(`${host}/recipe`, {
@@ -117,6 +119,7 @@ async function createRecipeLog() {
         .then((res) => res.json())
         .then((res) => {
             getLabel(res[0]);
+            updateChart(); //call the updateChart function with dishTypes
         })
     document.forms['add-recipe'].reset()
 
@@ -202,7 +205,6 @@ async function getLabel(analysis) {
 }
 
 // get the supabase database recipe information
-
 function getRecipes() {
    return fetch(`${host}/recipes`).then((res) => res.json())
 }
@@ -243,4 +245,28 @@ function createRecipeLog() {
     });
 }
 
+console.log(getRecipes())
+
+// function to update the chart after adding a new recipe
+async function updateChart() {
+    const recipes = await getRecipes();
+    dishTypeChart(recipes);
+    chart.update();
+}
+
+// load the chart and add event listener for the button
+document.addEventListener('DOMContentLoaded', function() {
+    async function loadChart() {
+        const recipes = await getRecipes();
+        dishTypeChart(recipes);
+    }
+
+    loadChart();
+
+    //event listener for dish type chart button
+    document.getElementById('viewChartButton').addEventListener('click', function() {
+        const chartContainer = document.getElementById('chartContainer');
+        chartContainer.style.display = chartContainer.style.display === 'none' ? 'block' : 'none';
+    });
+});
 
