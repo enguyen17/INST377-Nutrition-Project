@@ -74,17 +74,17 @@ async function createRecipeLog() {
     console.log('Creating Recipe Log');
 
     // calls and stores the edamam api response from the loadRecipeAnalysis function
-    recipeAnalysis = await loadRecipeAnalysis();
+    const recipeAnalysis = await loadRecipeAnalysis();
    
     console.log(recipeAnalysis);
 
-    nutrientInfo = recipeAnalysis.totalNutrients;
+    const nutrientInfo = recipeAnalysis.totalNutrients;
 
     const dishTypes = recipeAnalysis.dishType;
     dishTypeChart(dishTypes);
 
     // uses the post function to input the desired information into the database
-    await fetch(`${host}/recipe`, {
+    const response = await fetch(`${host}/recipe`, {
         method: 'POST',
         body: JSON.stringify({
             "recipeName": `${document.getElementById('recipeName').value}`,
@@ -113,13 +113,11 @@ async function createRecipeLog() {
         headers: {
             "Content-type": "application/json"
         }
-    })
-        .then((res) => res.json())
-        .then((res) => {
-            getLabel(res[0]);
-        })
-    document.forms['add-recipe'].reset()
+    });
 
+    const newRecipe = await response.json();
+    await updateRecipeTable();
+    document.forms['add-recipe'].reset();
 }
 
 async function getLabel(analysis) {
@@ -146,8 +144,6 @@ async function getLabel(analysis) {
     const fatCalories = totalFat * 9;
 
     let ingredients = document.getElementById('ingr').value;
-
-
 
     try {
         var vm = new Vue({
@@ -198,49 +194,44 @@ async function getLabel(analysis) {
     } catch (error) {
         console.error("getLabel", error);
     }
-    document.forms['add-recipe'].reset()
+    document.forms['add-recipe'].reset();
 }
 
 // get the supabase database recipe information
-
-function getRecipes() {
-   return fetch(`${host}/recipes`).then((res) => res.json())
+async function getRecipes() {
+   return fetch(`${host}/recipes`).then((res) => res.json());
 }
-// Function to update table
-function createRecipeLog() {
-    const recipeName = document.getElementById('recipeName').value;
 
-    getRecipes().then(data => {
-        const recipe = data.find(recipe => recipe.recipe_name.toLowerCase() === recipeName.toLowerCase());
-        if (recipe) {
-            const tableBody = document.getElementById('nutritionalTable').getElementsByTagName('tbody')[0];
-            tableBody.innerHTML = ''; 
+// Function to update table with all recipes
+async function updateRecipeTable() {
+    const allRecipes = await getRecipes();
 
-            const nutritionalInfo = [
-                { nutrient: 'Calories', amount: recipe.recipe_calories },
-                { nutrient: 'Total Fat', amount: recipe.total_fat },
-                { nutrient: 'Total Carbohydrates', amount: recipe.total_carb },
-                { nutrient: 'Sugar', amount: recipe.sugar },
-                { nutrient: 'Protein', amount: recipe.protein },
-            ];
+    const tableBody = document.getElementById('nutritionalTable').getElementsByTagName('tbody')[0];
+    tableBody.innerHTML = ''; 
 
-            // Create rows for each nutrient
-            nutritionalInfo.forEach(info => {
-                const row = document.createElement('tr');
-                const cell1 = document.createElement('td');
-                cell1.textContent = info.nutrient;
-                const cell2 = document.createElement('td');
-                cell2.textContent = info.amount;
-                row.appendChild(cell1);
-                row.appendChild(cell2);
-                tableBody.appendChild(row);
-            });
-        } else {
-            alert('Recipe not found.');
-        }
-    }).catch(error => {
-        console.error('Error fetching recipes:', error);
+    allRecipes.forEach(recipe => {
+        const row = document.createElement('tr');
+        
+        // Create cells for column
+        const cell1 = document.createElement('td');
+        cell1.textContent = recipe.recipe_name;
+        const cell2 = document.createElement('td');
+        cell2.textContent = recipe.recipe_calories;
+        const cell3 = document.createElement('td');
+        cell3.textContent = recipe.dish_type;
+        const cell4 = document.createElement('td');
+        cell4.textContent = recipe.cuisine_type;
+        
+        // Append cells to row
+        row.appendChild(cell1);
+        row.appendChild(cell2);
+        row.appendChild(cell3);
+        row.appendChild(cell4);
+        
+        // Append row to table 
+        tableBody.appendChild(row);
     });
 }
 
-
+// Initialize the table with existing recipes on page load
+document.addEventListener('DOMContentLoaded', updateRecipeTable);
