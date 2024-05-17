@@ -9,7 +9,7 @@ function dishTypeChart(recipes) {
     //reset dishTypeCounts
     dishTypeCounts = {};
 
-    //iterate through the recipe arraryu
+    //iterate through the recipe arrary
     recipes.forEach(recipe => {
         const dishType = recipe.dish_type;
         dishTypeCounts[dishType] = (dishTypeCounts[dishType] || 0) + 1;
@@ -119,6 +119,7 @@ async function createRecipeLog() {
         .then((res) => res.json())
         .then((res) => {
             getLabel(res[0]);
+            updateChart(); //call the updateChart function with dishTypes
         })
     document.forms['add-recipe'].reset()
 
@@ -209,6 +210,13 @@ function getRecipes() {
 }
 
 console.log(getRecipes())
+
+// function to update the chart after adding a new recipe
+async function updateChart() {
+    const recipes = await getRecipes();
+    dishTypeChart(recipes);
+    chart.update();
+}
 
 // load the chart and add event listener for the button
 document.addEventListener('DOMContentLoaded', function() {
