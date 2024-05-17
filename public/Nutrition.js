@@ -208,42 +208,6 @@ async function getLabel(analysis) {
 function getRecipes() {
    return fetch(`${host}/recipes`).then((res) => res.json())
 }
-// Function to update table
-function createRecipeLog() {
-    const recipeName = document.getElementById('recipeName').value;
-
-    getRecipes().then(data => {
-        const recipe = data.find(recipe => recipe.recipe_name.toLowerCase() === recipeName.toLowerCase());
-        if (recipe) {
-            const tableBody = document.getElementById('nutritionalTable').getElementsByTagName('tbody')[0];
-            tableBody.innerHTML = ''; 
-
-            const nutritionalInfo = [
-                { nutrient: 'Calories', amount: recipe.recipe_calories },
-                { nutrient: 'Total Fat', amount: recipe.total_fat },
-                { nutrient: 'Total Carbohydrates', amount: recipe.total_carb },
-                { nutrient: 'Sugar', amount: recipe.sugar },
-                { nutrient: 'Protein', amount: recipe.protein },
-            ];
-
-            // Create rows for each nutrient
-            nutritionalInfo.forEach(info => {
-                const row = document.createElement('tr');
-                const cell1 = document.createElement('td');
-                cell1.textContent = info.nutrient;
-                const cell2 = document.createElement('td');
-                cell2.textContent = info.amount;
-                row.appendChild(cell1);
-                row.appendChild(cell2);
-                tableBody.appendChild(row);
-            });
-        } else {
-            alert('Recipe not found.');
-        }
-    }).catch(error => {
-        console.error('Error fetching recipes:', error);
-    });
-}
 
 console.log(getRecipes())
 
