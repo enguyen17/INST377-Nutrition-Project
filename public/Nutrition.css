@@ -118,7 +118,7 @@ body{
 #foodPic img{
     width: 50%;
     height: 50%;
-    position: fixed;
+    position: absolute;
     right: 70px;
     top: 200px;
 }
@@ -177,8 +177,4 @@ body{
     border-top: 2px solid #333;
     background-color: #90c290;
     color: #333;
-}
-
-#dishTypeChart {
-    /* display: none !important; */
 }
