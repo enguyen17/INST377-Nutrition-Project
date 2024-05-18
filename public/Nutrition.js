@@ -80,8 +80,6 @@ async function createRecipeLog() {
     // calls and stores the edamam api response from the loadRecipeAnalysis function
     recipeAnalysis = await loadRecipeAnalysis();
    
-    console.log(recipeAnalysis);
-
     nutrientInfo = recipeAnalysis.totalNutrients;
 
 
@@ -123,8 +121,7 @@ async function createRecipeLog() {
         })
     document.forms['add-recipe'].reset()
 
-
-    // await updateRecipeTable();
+    await updateRecipeTable();
 
 }
 
@@ -212,7 +209,6 @@ function getRecipes() {
    return fetch(`${host}/recipes`).then((res) => res.json())
 }
 
-console.log(getRecipes())
 
 // function to update the chart after adding a new recipe
 async function updateChart() {
@@ -234,7 +230,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const recipes = await getRecipes();
         dishTypeChart(recipes);
         
-        console.log('here')
     }
 
     loadChart();
