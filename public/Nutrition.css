@@ -122,3 +122,63 @@ body{
     right: 70px;
     top: 200px;
 }
+
+/* Table style */
+
+#nutritionalTable {
+    width: 90%; 
+    margin: 20px auto; 
+    border-collapse: collapse;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background-color: #e6f4e6;
+    border: 2px solid #333;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    /* margin-top: -200px; */
+}
+
+#nutritionalTable caption {
+    font-size: 1.5em;
+    margin: 10px 0;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+}
+
+#nutritionalTable th, #nutritionalTable td {
+    padding: 12px;
+    border: 1px solid #333;
+    text-align: left;
+}
+
+#nutritionalTable th {
+    background-color: #90c290;
+    font-weight: bold;
+    color: #333;
+}
+
+#nutritionalTable td {
+    background-color: #fff;
+    color: #333;
+}
+
+#nutritionalTable tr:hover {
+    background-color: #d9f2d9;
+}
+
+#nutritionalTable thead tr {
+    border-bottom: 2px solid #333;
+}
+
+#nutritionalTable tbody tr:nth-child(even) {
+    background-color: #f2f9f2;
+}
+
+#nutritionalTable tfoot tr {
+    border-top: 2px solid #333;
+    background-color: #90c290;
+    color: #333;
+}
+
+#dishTypeChart {
+    /* display: none !important; */
+}

@@ -123,6 +123,9 @@ async function createRecipeLog() {
         })
     document.forms['add-recipe'].reset()
 
+
+    // await updateRecipeTable();
+
 }
 
 async function getLabel(analysis) {
@@ -218,19 +221,86 @@ async function updateChart() {
     chart.update();
 }
 
+// display chart on clic
+function toggleChart() {
+    const chartContainer = document.getElementById('chartContainer');
+    chartContainer.style.display = chartContainer.style.display === 'none' ? 'block' : 'none';
+
+}
+
 // load the chart and add event listener for the button
 document.addEventListener('DOMContentLoaded', function() {
     async function loadChart() {
         const recipes = await getRecipes();
         dishTypeChart(recipes);
+        
+        console.log('here')
     }
 
     loadChart();
-
-    //event listener for dish type chart button
-    document.getElementById('viewChartButton').addEventListener('click', function() {
-        const chartContainer = document.getElementById('chartContainer');
-        chartContainer.style.display = chartContainer.style.display === 'none' ? 'block' : 'none';
-    });
 });
 
+
+// Function to update table with all recipes
+
+async function updateRecipeTable() {
+
+    const allRecipes = await getRecipes();
+
+
+
+    const tableBody = document.getElementById('nutritionalTable').getElementsByTagName('tbody')[0];
+
+    tableBody.innerHTML = ''; 
+
+
+
+    allRecipes.forEach(recipe => {
+
+        const row = document.createElement('tr');
+
+        
+
+        // Create cells for column
+
+        const cell1 = document.createElement('td');
+
+        cell1.textContent = recipe.recipe_name;
+
+        const cell2 = document.createElement('td');
+
+        cell2.textContent = recipe.recipe_calories;
+
+        const cell3 = document.createElement('td');
+
+        cell3.textContent = recipe.dish_type;
+
+        const cell4 = document.createElement('td');
+
+        cell4.textContent = recipe.cuisine_type;
+
+        
+
+        // Append cells to row
+
+        row.appendChild(cell1);
+
+        row.appendChild(cell2);
+
+        row.appendChild(cell3);
+
+        row.appendChild(cell4);
+
+        
+
+        // Append row to table 
+
+        tableBody.appendChild(row);
+
+    });
+
+}
+
+// Initialize the table with existing recipes on page load
+
+document.addEventListener('DOMContentLoaded', updateRecipeTable);
