@@ -5,7 +5,7 @@ const express = require('express')
 const app = express()
 const port = 3000
 app.use(bodyParser.json())
-app.use(express.static(__dirname + '/public'))
+app.use(express.static(__dirname + '/public/'))
 
 const supabaseUrl = 'https://tchabdxeyblwtuuenvoq.supabase.co'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRjaGFiZHhleWJsd3R1dWVudm9xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQ1MDQzMDUsImV4cCI6MjAzMDA4MDMwNX0.u_NbXEqNxQtsopda8sF-2vwjLkl9K3kJeS4dyDu1A_M'
