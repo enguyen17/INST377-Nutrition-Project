@@ -43,7 +43,7 @@
             <button class="button-33" role="button">Calculate Recipe!</button>
         </div>
         <div style = "margin-top: 10px;">
-            <button id="viewChartButton" class="button-33">View Dish Type Chart</button>
+            <button id="viewChartButton" class="button-33" onclick="toggleChart()">View Dish Type Chart</button>
         </div>
         <br>
     </form>
@@ -53,12 +53,12 @@
         <nutrition-label :options="options" v-model="item"></nutrition-label>
     </div>
 
-    <div>
+    <div id="chartContainer" style="display: none;">
         <canvas id="dishTypeChart" width="600" height="200"></canvas>
     </div>
 <!-- Recipe Nutritional Info Table -->
 <table id="nutritionalTable">
-    <caption>Recipe Nutritional Information</caption>
+    <caption>Recipe Diary</caption>
     <thead>
         <tr>
             <th>Recipe Name</th>

@@ -5,19 +5,23 @@ let dishTypeCounts = {};
 let chart;
 
 // creates or updates chart
-function dishTypeChart(dishTypes) {
-    //update count for dishType
-    dishTypes.forEach(type => {
-        dishTypeCounts[type] = (dishTypeCounts[type] || 0) + 1;
+function dishTypeChart(recipes) {
+    //reset dishTypeCounts
+    dishTypeCounts = {};
+
+    //iterate through the recipe arrary
+    recipes.forEach(recipe => {
+        const dishType = recipe.dish_type;
+        dishTypeCounts[dishType] = (dishTypeCounts[dishType] || 0) + 1;
     });
 
     if (chart) {
-        //if chart exists update the data.
+        //if chart exists, update chart
         chart.data.labels = Object.keys(dishTypeCounts);
         chart.data.datasets[0].data = Object.values(dishTypeCounts);
         chart.update();
     } else {
-        //if chart doesnt exist create one.
+        //if chart doesn't exist, create one
         const ctx = document.getElementById('dishTypeChart');
         chart = new Chart(ctx, {
             type: 'bar',
@@ -74,17 +78,15 @@ async function createRecipeLog() {
     console.log('Creating Recipe Log');
 
     // calls and stores the edamam api response from the loadRecipeAnalysis function
-    const recipeAnalysis = await loadRecipeAnalysis();
+    recipeAnalysis = await loadRecipeAnalysis();
    
     console.log(recipeAnalysis);
 
-    const nutrientInfo = recipeAnalysis.totalNutrients;
+    nutrientInfo = recipeAnalysis.totalNutrients;
 
-    const dishTypes = recipeAnalysis.dishType;
-    dishTypeChart(dishTypes);
 
     // uses the post function to input the desired information into the database
-    const response = await fetch(`${host}/recipe`, {
+    await fetch(`${host}/recipe`, {
         method: 'POST',
         body: JSON.stringify({
             "recipeName": `${document.getElementById('recipeName').value}`,
@@ -113,11 +115,17 @@ async function createRecipeLog() {
         headers: {
             "Content-type": "application/json"
         }
-    });
+    })
+        .then((res) => res.json())
+        .then((res) => {
+            getLabel(res[0]);
+            updateChart(); //call the updateChart function with dishTypes
+        })
+    document.forms['add-recipe'].reset()
 
-    const newRecipe = await response.json();
-    await updateRecipeTable();
-    document.forms['add-recipe'].reset();
+
+    // await updateRecipeTable();
+
 }
 
 async function getLabel(analysis) {
@@ -144,6 +152,8 @@ async function getLabel(analysis) {
     const fatCalories = totalFat * 9;
 
     let ingredients = document.getElementById('ingr').value;
+
+
 
     try {
         var vm = new Vue({
@@ -194,44 +204,103 @@ async function getLabel(analysis) {
     } catch (error) {
         console.error("getLabel", error);
     }
-    document.forms['add-recipe'].reset();
+    document.forms['add-recipe'].reset()
 }
 
 // get the supabase database recipe information
-async function getRecipes() {
-   return fetch(`${host}/recipes`).then((res) => res.json());
+function getRecipes() {
+   return fetch(`${host}/recipes`).then((res) => res.json())
 }
 
+console.log(getRecipes())
+
+// function to update the chart after adding a new recipe
+async function updateChart() {
+    const recipes = await getRecipes();
+    dishTypeChart(recipes);
+    chart.update();
+}
+
+// display chart on clic
+function toggleChart() {
+    const chartContainer = document.getElementById('chartContainer');
+    chartContainer.style.display = chartContainer.style.display === 'none' ? 'block' : 'none';
+
+}
+
+// load the chart and add event listener for the button
+document.addEventListener('DOMContentLoaded', function() {
+    async function loadChart() {
+        const recipes = await getRecipes();
+        dishTypeChart(recipes);
+        
+        console.log('here')
+    }
+
+    loadChart();
+});
+
+
 // Function to update table with all recipes
+
 async function updateRecipeTable() {
+
     const allRecipes = await getRecipes();
 
+
+
     const tableBody = document.getElementById('nutritionalTable').getElementsByTagName('tbody')[0];
+
     tableBody.innerHTML = ''; 
 
+
+
     allRecipes.forEach(recipe => {
+
         const row = document.createElement('tr');
+
         
+
         // Create cells for column
+
         const cell1 = document.createElement('td');
+
         cell1.textContent = recipe.recipe_name;
+
         const cell2 = document.createElement('td');
+
         cell2.textContent = recipe.recipe_calories;
+
         const cell3 = document.createElement('td');
+
         cell3.textContent = recipe.dish_type;
+
         const cell4 = document.createElement('td');
+
         cell4.textContent = recipe.cuisine_type;
+
         
+
         // Append cells to row
+
         row.appendChild(cell1);
+
         row.appendChild(cell2);
+
         row.appendChild(cell3);
+
         row.appendChild(cell4);
+
         
+
         // Append row to table 
+
         tableBody.appendChild(row);
+
     });
+
 }
 
 // Initialize the table with existing recipes on page load
+
 document.addEventListener('DOMContentLoaded', updateRecipeTable);
