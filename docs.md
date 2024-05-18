@@ -54,4 +54,37 @@ To deploy the application using vercel:
 6. Import the respotories you want to deploy to your vercel account
 7. Deploy the repository/project.
 
+## API Usage
+This app utilizes the Nutrition Analysis API from Edamam. More information on how this API functions and documentation can be found [here](https://developer.edamam.com/edamam-nutrition-api).
+
+Users input recipes with each ingredient with quantities on a new line. The Edamam API will return various nutrition information such as number of calories, cuisine type, etc. This information gets stored in the supabase through a POST function as noted in the Edamam Documentation.
+
+### GET all recipes
+This returns all of the recipes that have been analyzed through the app. It returns an array of all recipes with the following information:
+
+id (integer) unique id assigned to each recipe
+created_at (timestamp) indicates when the recipe was analyzed by our application
+recipe_name (string) name of recipe
+dish_type (string) 
+recipe_calories
+cuisine_type
+num_servings
+total_fat
+saturated_fat
+trans_fat
+polyunsat_fat
+monounsat_fat
+cholesterol
+sodium
+total_carb
+fiber
+sugar
+protein
+vit_a
+vit_c
+calcium
+iron
+potassium
+vit_d
+
 
