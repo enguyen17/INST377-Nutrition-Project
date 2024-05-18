@@ -29,3 +29,29 @@ This app uses a Suapbase database. Install Supabase using the following command:
 `npm install @supabase/supabase-js`
 
 ### Running Application on a Server
+To deploy the application using vercel: 
+1. Create a new file named "vercel.json" 
+2. Add the following lines:
+    {
+        "version": 2,
+        "builds":[
+            {
+                "src": "./index.js",
+                "use": "@vercel/node"
+            }
+        ],
+        "routes": [
+            {
+                "src": "/(.*)",
+                "dest": "/"
+            }
+        ]
+    }
+
+3. Once you have added the file, push it to your remote repository
+4. Navigate to vercel.com "https://vercel.com"
+5. Create an account (linking with github, gitlab, or bitbucket are easiest)
+6. Import the respotories you want to deploy to your vercel account
+7. Deploy the repository/project.
+
+
