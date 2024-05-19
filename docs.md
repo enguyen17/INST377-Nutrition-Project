@@ -199,3 +199,12 @@ app.post('/recipe', async (req, res) => {
 })
 ```
 
+### A clear set of expencations around known bugs
+- The Edamam api receiveies a list of ingredients, but requires a certain "quality" of ingredients. Firstly, when adding the ingredients cheese or bread, water needs to also be added as an ingredient. Secondly, when entering ingredients, You can submit items without a quantity. The Edamame api will try to assign a quantitiy to them base on the expected serving size. Thirdly, the api will not use raw ingredients. And fourthly, the api can use single and two part compound. Any issues with the "quality" of the recipe will be represented by a 555 error. Other possible reasons are: too high or too low weight of a serving, unrecognized ingredients or ingredients to which no weight can be assigned. 
+- In our experience with the api we found that you cannot simply add a verw ingrediants like salt, and pepper, but you have to make a list of ingredients that represent a more full recipie, as opposed to a few ingredients.
+- To use the Edemam api you need to create an account with Edeam and aquire credientials. These credentials (ap_key and app_id) can be found in the dashboard.
+Upgraded plans are not required for the use of the api.
+- To get the best results: Always include an ingredient quantity: “3 oz butter cookies” is preferable to “butter cookies or tuiles”
+Shorten and simplify the line: “2 cans garbanzo beans, drained” is preferable to “2-2 1/2 cans of washed and drained garbanzo beans”
+If oil is used for frying, indicate so in the ingredient line (add the words “for frying”), so we can accurately calculate how much gets absorbed.
+For stocks and broths, include “stock” or “broth” in the recipe title, so we can accurately calculate the remaining nutritional value once it’s strained.
