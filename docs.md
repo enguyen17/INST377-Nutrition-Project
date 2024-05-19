@@ -199,10 +199,10 @@ app.post('/recipe', async (req, res) => {
 })
 ```
 
-### A clear set of expencations around known bugs
-- The Edamam api receiveies a list of ingredients, but requires a certain "quality" of ingredients. Firstly, when adding the ingredients cheese or bread, water needs to also be added as an ingredient. Secondly, when entering ingredients, You can submit items without a quantity. The Edamame api will try to assign a quantitiy to them base on the expected serving size. Thirdly, the api will not use raw ingredients. And fourthly, the api can use single and two part compound. Any issues with the "quality" of the recipe will be represented by a 555 error. Other possible reasons are: too high or too low weight of a serving, unrecognized ingredients or ingredients to which no weight can be assigned. 
+### A clear set of expectations around known bugs
+- The Edamam api recieves a list of ingredients, but requires a certain "quality" of ingredients. Firstly, when adding the ingredients cheese or bread, water needs to also be added as an ingredient. Secondly, when entering ingredients you can submit items without a quantity. The Edamam api will try to assign a quantity to them based on the expected serving size. Thirdly, the api will not use raw ingredients. And fourthly, the api can use single and two part compound. Any issues with the "quality" of the recipe will be represented by a 555 error. Other possible reasons are: too high or too low weight of a serving, unrecognized ingredients or ingredients to which no weight can be assigned. 
 - In our experience with the api we found that you cannot simply add a verw ingrediants like salt, and pepper, but you have to make a list of ingredients that represent a more full recipie, as opposed to a few ingredients.
-- To use the Edemam api you need to create an account with Edeam and aquire credientials. These credentials (ap_key and app_id) can be found in the dashboard.
+- To use the Edamam api you need to create an account with Edamam and acquire credientials. These credentials (app_key and app_id) can be found in the dashboard.
 Upgraded plans are not required for the use of the api.
 - To get the best results: Always include an ingredient quantity: “3 oz butter cookies” is preferable to “butter cookies or tuiles”
 Shorten and simplify the line: “2 cans garbanzo beans, drained” is preferable to “2-2 1/2 cans of washed and drained garbanzo beans”
