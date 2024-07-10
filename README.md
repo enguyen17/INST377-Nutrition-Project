@@ -14,4 +14,9 @@ This website is desgined to be accessible and functional from a variety of platf
   
 # [Developer Manual](https://github.com/enguyen17/INST377-Nutrition-Project/blob/main/docs.md)
 
+# Demo
 
+![Image of Home Page](https://github.com/enguyen17/INST377-Nutrition-Project/blob/main/images/homepage.png)
+![Image of Nutrition Analysis](https://github.com/enguyen17/INST377-Nutrition-Project/blob/main/images/nutritionlabel.png)
+![Image of Recipe Log](https://github.com/enguyen17/INST377-Nutrition-Project/blob/main/images/recipelog.png)
+![Image of About Page](https://github.com/enguyen17/INST377-Nutrition-Project/blob/main/images/about.png)
